@@ -22,6 +22,7 @@ function generatePassword() {
   if (!passwordLength) {
     // if something non-numerical is entered as a password length
     alert("Please enter a valid number.");
+    return "Error 404: Password not found"; // Shows up in text box
   } else if (parseInt(passwordLength) < 8) {
     // if something less than 8 is entered
     alert("Password length must be at least 8 characters.");
@@ -35,36 +36,45 @@ function generatePassword() {
     var hasUppercase = confirm("Click OK to add Uppercase letters");
     var hasNumbers = confirm("Click OK to add Numbers");
     var hasSpecialCharacters = confirm("Click OK to add Special Characters");
-    var selectedOptions = [];
-    var password = "";
+    var selectedOptions = [/* input selected characters from Character Variable list */];
+    var password = ""; 
 
+    // if no characters selected give alert + no password
     if (!hasLowercase && !hasUppercase && !hasNumbers && !hasSpecialCharacters) {
-      alert("We cannot make a password with no selected characters");
-      generatePassword();
+      alert("We cannot make a password with no selected characters"); 
+      return "Error 404: Password not found"; // shows up in text box
     }
 
+    // if lowercase is selected, assign to selectedOption + pushes items individually due to ...
     if (hasLowercase) {
       selectedOptions.push(...lowerCasedCharacters);
     }
 
+    // if uppercase is selected, assign to selectedOption + pushes items individually due to ...
     if (hasUppercase) {
       selectedOptions.push(...upperCasedCharacters);
     }
 
+    // if numbers is selected, assign to selectedOption + pushes items individually due to ...
     if (hasNumbers) {
       selectedOptions.push(...numericCharacters);
     }
 
+    // if special character is selected, assign to selectedOption + pushes items individually due to ...
     if (hasSpecialCharacters) {
       selectedOptions.push(...specialCharacters);
     }
 
+    // loop to create the selected number of characters
     for (var i = 0; i < passwordLength; i++) {
+      // rounds random number, multiplies by selectedOptions character amount
       var randomNumber = Math.floor(Math.random() * selectedOptions.length);
+      // uses the random number to assign a character
       var randomChar = selectedOptions[randomNumber];
+      // sets up characters in password box as input text object
       password = password + randomChar;
     }
-
+    //return final result to text box
     return password;
   }
 }
